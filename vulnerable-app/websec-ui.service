@@ -1,0 +1,16 @@
+[Unit]
+Description=WebSec UI
+After=network.target
+
+[Service]
+User=student
+WorkingDirectory=/home/student/websec-ui
+ExecStart=/usr/bin/python3 -m http.server 5500
+Restart=on-failure
+RestartSec=5
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
