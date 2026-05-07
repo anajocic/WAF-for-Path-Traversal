@@ -9,13 +9,19 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
         </processorPath>
-        <module name="vulnerable-app" />
+        <module name="protected-app" />
+        <module name="web-security" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="vulnerable-app" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="protected-app" options="-parameters" />
       <module name="vulnerable-app" options="-parameters" />
+      <module name="web-security" options="-parameters" />
     </option>
   </component>
 </project>

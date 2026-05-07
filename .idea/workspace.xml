@@ -4,7 +4,48 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c889e60-9eec-4a4b-ba20-51252e0456d5" name="Changes" comment="" />
+    <list default="true" id="4c889e60-9eec-4a4b-ba20-51252e0456d5" name="Changes" comment="first commit">
+      <change afterPath="$PROJECT_DIR$/protected-app/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/keys/key1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/WebSecurityApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/api/MovieController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/api/ReviewController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/api/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/api/dto/AuthenticationRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/api/dto/AuthenticationResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/api/dto/MovieResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/api/dto/ReviewResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/api/dto/UpdateReviewRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/config/OpenApiConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/config/RequestLoggingFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/exception/WebSecMissingDataException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/facade/AuthenticationFacade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/facade/MovieFacade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/facade/ReviewFacade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/persistence/Movie.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/persistence/MovieRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/persistence/Review.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/persistence/ReviewRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/persistence/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/persistence/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/security/ApplicationConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/security/JwtAuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/security/JwtService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/security/SecurityConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/service/MovieService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/service/ReviewService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/java/com/example/websecurity/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/src/test/java/com/example/websecurity/WebSecurityApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/websec-api.service" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/protected-app/websec-ui.service" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,6 +54,21 @@
   <component name="EmbeddingIndexingInfo">
     <option name="cachedIndexableFilesCount" value="7" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "anajocic"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/anajocic/WAF-for-Path-Traversal.git",
+    "accountId": "c8802595-5083-49df-9e96-f435173aa38d"
+  }
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -38,9 +94,11 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Ana/Documents/WAF-path-traversal",
@@ -59,9 +117,16 @@
       <recent name="C:\Users\Ana\Documents\WAF-path-traversal" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.WebSecurityApplication">
+    <configuration name="WebSecurityApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="web-security" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.websecurity.WebSecurityApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WebSecurityApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="vulnerable-app" />
+      <module name="protected-app" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.websecurity.WebSecurityApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -75,12 +140,25 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1778161722283</updated>
-      <workItem from="1778161725384" duration="302000" />
+      <workItem from="1778161725384" duration="690000" />
     </task>
+    <task id="LOCAL-00001" summary="first commit">
+      <option name="closed" value="true" />
+      <created>1778162160114</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1778162160114</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
