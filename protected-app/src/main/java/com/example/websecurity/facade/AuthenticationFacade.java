@@ -4,6 +4,7 @@ import com.example.websecurity.api.dto.AuthenticationRequest;
 import com.example.websecurity.api.dto.AuthenticationResponse;
 import com.example.websecurity.security.JwtService;
 import com.example.websecurity.service.UserService;
+import com.example.websecurity.waf.TokenStore;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ public class AuthenticationFacade {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserService userService;
+    private final TokenStore tokenStore;
 
     @Transactional
     public AuthenticationResponse authenticate(@NotNull AuthenticationRequest request) {
@@ -33,6 +35,7 @@ public class AuthenticationFacade {
 
         var user = userService.getUserByEmail(request.getEmail());
         var accessToken = jwtService.generateAccessToken(user);
+        tokenStore.save(user.getUsername(), accessToken);
         return AuthenticationResponse.builder()
                 .accessToken(accessToken)
                 .build();

@@ -1,5 +1,7 @@
 package com.example.websecurity.waf;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -18,14 +20,14 @@ public class WafRules {
             Pattern.compile("\\\\")
     );
 
-    public static boolean isValid(String kid) {
-        if(kid == null || kid.isBlank())
+    public static boolean isValidPath(String path) {
+        if(path == null || path.isBlank())
             return false;
-        if(!white_list.matcher(kid).matches()){
+        if(!white_list.matcher(path).matches()){
             return false;
         }
         for(Pattern p : black_list){
-            if (p.matcher(kid).matches()){
+            if (p.matcher(path).matches()){
                 return false;
             }
         }
