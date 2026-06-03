@@ -60,7 +60,8 @@ public class SecurityConfiguration {
                                 "/error",
                                 "test.txt",
                                 "/webjars/**",
-                                "/actuator/**"
+                                "/actuator/**",
+                                "/upload"
 
                         ).permitAll()
                         .anyRequest().authenticated()
