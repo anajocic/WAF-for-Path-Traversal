@@ -23,6 +23,20 @@ public class PathTraversalFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        String uri = request.getRequestURI();
+        if (!WafRules.isValidPath(uri)) {
+            System.out.println("[WAF]: Path traversal in URI: " + uri);
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "WAF: Path traversal in URL");
+            return;
+        }
+
+        String queryString = request.getQueryString();
+        if (queryString != null && !WafRules.isValidPath(queryString)) {
+            System.out.println("[WAF]: Path traversal in query param: " + queryString);
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "WAF: Path traversal in query parametars");
+            return;
+        }
+
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {

@@ -13,14 +13,14 @@ import java.nio.file.*;
 @RestController
 public class FileUploadController {
 
-    @Operation(summary = "Upload fajla (ZAŠTIĆENO - WAF blokira path traversal)")
+    @Operation(summary = "Upload fajla")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         String filename = file.getOriginalFilename();
 
-//        if (!WafRules.isSafeFilename(filename)) {
-//            return ResponseEntity.status(403).body("WAF: Blokirano - naziv fajla sadrzi path traversal: " + filename);
-//        }
+        if (!WafRules.isSafeFilename(filename)) {
+            return ResponseEntity.status(403).body("WAF: Blokirano - naziv fajla sadrzi path traversal: " + filename);
+        }
 
         Path uploadDir = Paths.get("uploads");
         Files.createDirectories(uploadDir);

@@ -2,6 +2,8 @@ package com.example.websecurity.waf;
 
 import org.springframework.stereotype.Component;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -21,16 +23,47 @@ public class WafRules {
     );
 
     public static boolean isValidPath(String path) {
-        if(path == null || path.isBlank())
-            return false;
-        if(!white_list.matcher(path).matches()){
+        if (path == null || path.isBlank()) return false;
+        try {
+            String decoded = java.net.URLDecoder.decode(path, "UTF-8");
+            for (Pattern p : black_list) {
+                if (p.matcher(decoded).find() || p.matcher(path).find()) {
+                    return false;
+                }
+            }
+        } catch (Exception e) {
             return false;
         }
-        for(Pattern p : black_list){
-            if (p.matcher(path).matches()){
+        return true;
+    }
+
+    public static boolean isSafeFilename(String filename) {
+        if (filename == null || filename.isBlank()) {
+            return false;
+        }
+
+        for (Pattern p : black_list) {
+            if (p.matcher(filename).find()) {
                 return false;
             }
         }
+
+        Pattern filenameWhitelist = Pattern.compile("^[a-zA-Z0-9._-]{1,255}$");
+        if (!filenameWhitelist.matcher(filename).matches()) {
+            return false;
+        }
+
+        try {
+            Path uploadDir = Paths.get("uploads").toAbsolutePath().normalize();
+            Path resolved = uploadDir.resolve(filename).normalize();
+
+            if (!resolved.startsWith(uploadDir)) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
         return true;
     }
 }
