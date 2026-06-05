@@ -1,5 +1,6 @@
 package com.example.websecurity.security;
 
+import com.example.websecurity.waf.PathTraversalFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,7 @@ import java.util.List;
 public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
+    private final PathTraversalFilter pathTraversalFilter;
 
     @Value("${websec.cors.allowed.origins:*}")
     private List<String> allowedOrigins;
@@ -58,13 +60,15 @@ public class SecurityConfiguration {
                                 "/error",
                                 "test.txt",
                                 "/webjars/**",
-                                "/actuator/**"
+                                "/actuator/**",
+                                "/upload"
 
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
 
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+                .addFilterBefore(pathTraversalFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
