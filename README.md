@@ -196,7 +196,113 @@ Za dodavanje novih kljuceva — prosiriti logiku u `isPathSafeAndWhitelisted()`.
 
 - Java 17+
 - Maven 3.8+
-- MySQL 8.0+ (port 3308)
+- Docker Desktop (za MySQL kontejner)
+
+### 1. Pokretanje baze podataka (Docker)
+
+Baza se pokrece kao Docker kontejner. **Ovo treba uraditi prije pokretanja aplikacija.**
+
+**Prvi put — kreiranje volumena i pokretanje kontejnera:**
+
+```bash
+docker run -d \
+  --name websec-mysql \
+  -e MYSQL_ROOT_PASSWORD=rootpassword \
+  -e MYSQL_DATABASE=websec \
+  -p 3308:3306 \
+  -v websec-mysql-data:/var/lib/mysql \
+  mysql:8.0
+```
+
+> `-v websec-mysql-data:/var/lib/mysql` kreira named volume koji cuva podatke i izmedju restartova.
+
+**Svaki naredni put — samo pokrenuti vec postojeci kontejner:**
+
+```bash
+docker start websec-mysql
+```
+
+**Provjera da li kontejner radi:**
+
+```bash
+docker ps
+```
+
+Sacekati nekoliko sekundi da MySQL bude spreman, pa tek onda pokrenuti aplikacije.
+
+### 2. Pokretanje aplikacija
+
+---
+
+## Testni slucajevi (curl)
+
+Svi testovi se mogu pokrenuti iz terminala nakon sto su obje aplikacije pokrenute.
+
+### File Upload testovi
+
+**Priprema test fajla:**
+
+```powershell
+echo "test sadrzaj" > test.txt
+```
+
+#### Ranjiva aplikacija (port 8088)
+
+```powershell
+# Normalan upload — ocekivani odgovor: 200 OK
+curl.exe -X POST http://localhost:8088/upload -F "file=@test.txt;filename=test.txt"
+
+# Path traversal (direktni) — ranjiva app DOZVOLJAVA
+curl.exe -X POST http://localhost:8088/upload -F "file=@test.txt;filename=../malicious.txt"
+
+# Path traversal (URL encoding) — ranjiva app DOZVOLJAVA
+curl.exe -X POST http://localhost:8088/upload -F "file=@test.txt;filename=..%2Fmalicious.txt"
+```
+
+#### Zasticena aplikacija (port 8089)
+
+```powershell
+# Normalan upload — ocekivani odgovor: 200 OK
+curl.exe -X POST http://localhost:8089/upload -F "file=@test.txt;filename=test.txt"
+
+# Path traversal (direktni) — WAF BLOKIRA, ocekivano: 403 Forbidden
+curl.exe -X POST http://localhost:8089/upload -F "file=@test.txt;filename=../malicious.txt"
+
+# Path traversal (URL encoding) — WAF BLOKIRA, ocekivano: 403 Forbidden
+curl.exe -X POST http://localhost:8089/upload -F "file=@test.txt;filename=..%2Fmalicious.txt"
+```
+
+---
+
+### JWT `kid` Path Traversal i URL/Query parametar testovi
+
+Token koji se koristi u primjerima ispod:
+
+```
+eyJraWQiOiJrZXkxIiwiYWxnIjoiSFMyNTYifQ.eyJ0b2tlblR5cGUiOiJBQ0NFU1MiLCJ1c2VySWQiOjEsInN1YiI6Im1hamFAbWFqYS5jb20iLCJpYXQiOjE3ODA2NzIzMzZ9.j0mCBbw9GqoM_upOs17d7lVLCYmpwGku3UKXormu6JU
+```
+
+#### Ranjiva aplikacija (port 8088)
+
+```powershell
+# Path traversal u URL putanji — ranjiva app DOZVOLJAVA
+curl.exe -H "Authorization: Bearer eyJraWQiOiJrZXkxIiwiYWxnIjoiSFMyNTYifQ.eyJ0b2tlblR5cGUiOiJBQ0NFU1MiLCJ1c2VySWQiOjEsInN1YiI6Im1hamFAbWFqYS5jb20iLCJpYXQiOjE3ODA2NzIzMzZ9.j0mCBbw9GqoM_upOs17d7lVLCYmpwGku3UKXormu6JU" "http://localhost:8088/etc/passwd"
+
+# Path traversal u query parametru — ranjiva app DOZVOLJAVA
+curl.exe -H "Authorization: Bearer eyJraWQiOiJrZXkxIiwiYWxnIjoiSFMyNTYifQ.eyJ0b2tlblR5cGUiOiJBQ0NFU1MiLCJ1c2VySWQiOjEsInN1YiI6Im1hamFAbWFqYS5jb20iLCJpYXQiOjE3ODA2NzIzMzZ9.j0mCBbw9GqoM_upOs17d7lVLCYmpwGku3UKXormu6JU" "http://localhost:8088/download?file=../../etc/passwd"
+```
+
+#### Zasticena aplikacija (port 8089)
+
+```powershell
+# Path traversal u URL putanji — WAF BLOKIRA, ocekivano: 403 Forbidden
+curl.exe -H "Authorization: Bearer eyJraWQiOiJrZXkxIiwiYWxnIjoiSFMyNTYifQ.eyJ0b2tlblR5cGUiOiJBQ0NFU1MiLCJ1c2VySWQiOjEsInN1YiI6Im1hamFAbWFqYS5jb20iLCJpYXQiOjE3ODA2NzIzMzZ9.j0mCBbw9GqoM_upOs17d7lVLCYmpwGku3UKXormu6JU" "http://localhost:8089/etc/passwd"
+
+# Path traversal u query parametru — WAF BLOKIRA, ocekivano: 403 Forbidden
+curl.exe -H "Authorization: Bearer eyJraWQiOiJrZXkxIiwiYWxnIjoiSFMyNTYifQ.eyJ0b2tlblR5cGUiOiJBQ0NFU1MiLCJ1c2VySWQiOjEsInN1YiI6Im1hamFAbWFqYS5jb20iLCJpYXQiOjE3ODA2NzIzMzZ9.j0mCBbw9GqoM_upOs17d7lVLCYmpwGku3UKXormu6JU" "http://localhost:8089/download?file=../../etc/passwd"
+```
+
+---
 
 ## Struktura projekta
 
